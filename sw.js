@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fasting-tracker-cache-v2';
+const CACHE_NAME = 'fasting-tracker-cache-v3';
 const urlsToCache = [
   'index.html',     // Relative to sw.js
   'style.css',      // Relative to sw.js
