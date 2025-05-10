@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fasting Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <!-- Theme color for Android status bar -->
+    <meta name="theme-color" content="#4CAF50">
+    <!-- iOS specific meta tags for PWA feel (optional) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FastTrack">
+</head>
+<body>
+    <div class="container">
+        <h1>Fasting Tracker</h1>
+
+        <div class="controls">
+            <label for="startTimeInput">Set Fast Start Time (optional):</label>
+            <input type="datetime-local" id="startTimeInput">
+            <button id="startFastBtn">Start Fast Now</button>
+            <button id="setStartTimeBtn">Start Fast From Set Time</button>
+            <button id="stopFastBtn" style="display:none;">Stop Fast & Log</button>
+        </div>
+
+        <div id="fastingInfo" style="display:none;">
+            <h2>Current Fast</h2>
+            <p>Started: <span id="fastStartTimeDisplay"></span></p>
+            <p>Duration: <span id="fastDurationDisplay">00:00:00</span></p>
+        </div>
+
+        <div id="benefitsSection">
+            <h2>Potential Benefits Achieved</h2>
+            <ul id="benefitsList">
+                <!-- Benefits will be dynamically inserted here by JavaScript -->
+            </ul>
+        </div>
+
+        <div id="pastFastsSection" style="display:none;">
+            <h2>Past Fasts Log</h2>
+            <ul id="pastFastsList">
+                <!-- Past fasts will be listed here by JavaScript -->
+            </ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
