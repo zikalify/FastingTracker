@@ -1,6 +1,6 @@
 {
-  "name": "Fasting Benefits Tracker",
-  "short_name": "FastTrack",
+  "name": "Fasting Tracker",
+  "short_name": "Fasting Tracker",
   "description": "Track your fasting periods and discover the potential benefits as time progresses.",
   "start_url": "index.html", // Relative to manifest.json
   "display": "standalone",
