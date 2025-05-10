@@ -138,8 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('pastFastsLog', JSON.stringify(existingLogs));
         }
 
-        alert(`Fast stopped!\nDuration: ${loggedDuration}`);
-
         localStorage.removeItem('fastStartTime');
         fastStartDate = null;
 
