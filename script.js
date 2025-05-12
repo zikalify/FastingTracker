@@ -192,22 +192,104 @@ document.addEventListener('DOMContentLoaded', () => {
                 const startDate = new Date(log.startTime);
                 const endDate = new Date(log.endTime);
 
+                // Create buttons container
+                const buttonContainer = document.createElement('div');
+                buttonContainer.className = 'log-actions';
+
+                // Create edit button
+                const editButton = document.createElement('button');
+                editButton.textContent = 'Edit';
+                editButton.classList.add('edit-log-btn');
+                editButton.addEventListener('click', () => showEditForm(log.id, log));
+
+                // Create delete button
                 const deleteButton = document.createElement('button');
                 deleteButton.textContent = 'Delete';
-                deleteButton.classList.add('delete-log-btn'); // For styling
+                deleteButton.classList.add('delete-log-btn');
                 deleteButton.addEventListener('click', () => deleteLogEntry(log.id));
 
-                li.innerHTML = `
-                    <strong>Ended:</strong> ${formatDateTime(endDate)}<br>
-                    <strong>Started:</strong> ${formatDateTime(startDate)}<br>
-                    <strong>Duration:</strong> ${log.durationText}
-                `;
-                li.appendChild(deleteButton); // Add delete button to the list item
+                // Add buttons to container
+                buttonContainer.appendChild(editButton);
+                buttonContainer.appendChild(deleteButton);
 
+                li.innerHTML = `
+                    <strong>Started:</strong> ${formatDateTime(startDate)}<br>
+                    <strong>Ended:</strong> ${formatDateTime(endDate)}<br>
+                    <strong>Duration:</strong> ${log.durationText}
+                    <div class="edit-form" id="edit-form-${log.id}" style="display: none; margin-top: 10px;">
+                        <label>Start Time:</label>
+                        <input type="datetime-local" id="edit-start-${log.id}" value="${startDate.toISOString().slice(0, 16)}">
+                        <label>End Time:</label>
+                        <input type="datetime-local" id="edit-end-${log.id}" value="${endDate.toISOString().slice(0, 16)}">
+                        <button class="save-edit-btn" data-id="${log.id}">Save</button>
+                        <button class="cancel-edit-btn" data-id="${log.id}">Cancel</button>
+                    </div>
+                `;
+                li.appendChild(buttonContainer);
                 pastFastsList.appendChild(li);
+            });
+
+            // Add event listeners for save and cancel buttons
+            document.querySelectorAll('.save-edit-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => saveEdit(e.target.dataset.id));
+            });
+            document.querySelectorAll('.cancel-edit-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => cancelEdit(e.target.dataset.id));
             });
         } else {
             pastFastsSection.style.display = 'none';
+        }
+    }
+
+    function showEditForm(logId, logData) {
+        const editForm = document.getElementById(`edit-form-${logId}`);
+        if (editForm) {
+            editForm.style.display = editForm.style.display === 'none' ? 'block' : 'none';
+        }
+    }
+
+    function saveEdit(logId) {
+        const startTimeInput = document.getElementById(`edit-start-${logId}`);
+        const endTimeInput = document.getElementById(`edit-end-${logId}`);
+        
+        const newStartTime = new Date(startTimeInput.value);
+        const newEndTime = new Date(endTimeInput.value);
+        
+        if (isNaN(newStartTime.getTime()) || isNaN(newEndTime.getTime()) || newStartTime >= newEndTime) {
+            alert('Please enter valid start and end times. End time must be after start time.');
+            return;
+        }
+        
+        // Calculate new duration
+        const durationMs = newEndTime - newStartTime;
+        const totalSeconds = Math.floor(durationMs / 1000);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        const durationText = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        
+        // Update the log entry
+        let logs = JSON.parse(localStorage.getItem('pastFastsLog')) || [];
+        logs = logs.map(log => {
+            if (log.id === Number(logId)) {
+                return {
+                    ...log,
+                    startTime: newStartTime.toISOString(),
+                    endTime: newEndTime.toISOString(),
+                    durationText: durationText
+                };
+            }
+            return log;
+        });
+        
+        localStorage.setItem('pastFastsLog', JSON.stringify(logs));
+        displayPastFasts(); // Refresh the display
+    }
+    
+    function cancelEdit(logId) {
+        const editForm = document.getElementById(`edit-form-${logId}`);
+        if (editForm) {
+            editForm.style.display = 'none';
         }
     }
 

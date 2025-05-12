@@ -117,24 +117,83 @@ button:hover {
 
 #pastFastsList li {
     background: #f8f9fa;
-    margin-bottom: 10px;
-    padding: 12px;
-    border-radius: 5px;
-    border-left: 5px solid #007bff; /* Blue accent for past fasts */
-    font-size: 0.9em;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.log-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.edit-log-btn {
+    background-color: #3498db !important; /* Blue color for edit button */
+}
+
+.edit-log-btn:hover {
+    background-color: #2980b9 !important;
 }
 
 .delete-log-btn {
-    background-color: #dc3545; /* Red color for delete */
-    color: white;
-    padding: 4px 8px;
-    font-size: 0.8em;
-    border-radius: 3px;
-    margin-left: 10px;
-    float: right; /* Align button to the right */
-    cursor: pointer;
+    background-color: #e74c3c !important; /* Red color for delete button */
 }
 
 .delete-log-btn:hover {
-    background-color: #c82333;
+    background-color: #c0392b !important;
+}
+
+.edit-form {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+.edit-form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: 500;
+}
+
+.edit-form input[type="datetime-local"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.save-edit-btn {
+    background-color: #2ecc71 !important; /* Green color for save button */
+    margin-right: 5px;
+}
+
+.save-edit-btn:hover {
+    background-color: #27ae60 !important;
+}
+
+.cancel-edit-btn {
+    background-color: #95a5a6 !important; /* Gray color for cancel button */
+}
+
+.cancel-edit-btn:hover {
+    background-color: #7f8c8d !important;
+}
+
+/* Make buttons smaller on mobile */
+@media (max-width: 480px) {
+    .log-actions {
+        flex-direction: column;
+    }
+    
+    .log-actions button {
+        width: 100%;
+        margin: 2px 0;
+    }
 }
