@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Register Service Worker
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js') // Adjusted for relative path
+            navigator.serviceWorker.register('/FastingTracker/sw.js') // Adjusted for relative path
                 .then(registration => {
                     console.log('ServiceWorker registration successful with scope: ', registration.scope);
                 })
